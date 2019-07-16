@@ -3,6 +3,7 @@
           package="com.wepa.callrecognizer">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
@@ -20,9 +21,17 @@
             </intent-filter>
         </activity>
 
-        <service
+        <receiver android:name=".main.IncomingCallReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
 
-                android:name=".CallDetectService"
+        <service
+                android:name=".main.CallDetectService"
 
                 android:enabled="true"
 

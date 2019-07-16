@@ -1,10 +1,8 @@
-
 package com.wepa.callrecognizer.main
+
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-
-import android.R.attr.start
 
 /**
  * Call detect service.
@@ -13,11 +11,19 @@ import android.R.attr.start
  *
  * @author Moskvichev Andrey V.
  */
-class CallDetectService : Service() {
+class CallDetectService() : Service() {
+
+    private var clientNumber = ""
+
     private var callHelper: CallHelper? = null
 
+    override fun onStart(intent: Intent?, startId: Int) {
+        super.onStart(intent, startId)
+        clientNumber = intent?.getStringExtra(MainActivity::class.java.simpleName) ?: ""
+    }
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        callHelper = CallHelper(this)
+        callHelper = CallHelper(this, clientNumber)
 
         val res = super.onStartCommand(intent, flags, startId)
         callHelper!!.start()
@@ -31,7 +37,6 @@ class CallDetectService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        // not supporting binding
         return null
     }
 }

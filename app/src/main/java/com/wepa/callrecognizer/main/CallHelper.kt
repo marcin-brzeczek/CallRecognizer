@@ -6,32 +6,37 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import android.widget.Toast
+import com.wepa.callrecognizer.main.utils.makeLongToast
 
 /**
  * Helper class to detect incoming and outgoing calls.
  * @author Moskvichev Andrey V.
  */
-class CallHelper(private val ctx: Context) {
-    private var tm: TelephonyManager? = null
+class CallHelper(private val context: Context, number:String) {
+    private var telephonyManager: TelephonyManager? = null
     private val callStateListener: CallStateListener
 
     private val outgoingReceiver: OutgoingReceiver
 
-    /**
-     * Listener to detect incoming calls.
-     */
+    private val callerNumber = number
+    private val outgoingCall = "Wepa Połączenie wychodzące: "
+    private val incomingCall = "Wepa Połączenie przychodzące: "
+    private val mockedInformationNumber =
+        "Jan Kowalski \n " +
+                "Firma Testowa sp. z o.o. \n" +
+                "Zakup za ostatnie 6 miesięcy: 35 000\n" +
+                "Zamówienia za ostatnie 6 miesięcy: 45 000"
+
     private inner class CallStateListener : PhoneStateListener() {
         override fun onCallStateChanged(state: Int, incomingNumber: String) {
             when (state) {
                 TelephonyManager.CALL_STATE_RINGING ->
-                    // called when someone is ringing to this phone
 
-                    Toast.makeText(
-                        ctx,
-                        "Incoming: $incomingNumber",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    if (incomingNumber == callerNumber) {
+                        context.makeLongToast(mockedInformationNumber)
+                    } else {
+                        context.makeLongToast(incomingCall)
+                    }
             }
         }
     }
@@ -43,14 +48,8 @@ class CallHelper(private val ctx: Context) {
 
         override fun onReceive(context: Context, intent: Intent) {
             val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-
-            Toast.makeText(
-                ctx,
-                "Outgoing: $number",
-                Toast.LENGTH_LONG
-            ).show()
+                context.makeLongToast("$outgoingCall $number")
         }
-
     }
 
     init {
@@ -63,19 +62,19 @@ class CallHelper(private val ctx: Context) {
      * Start calls detection.
      */
     fun start() {
-        tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        tm!!.listen(callStateListener, PhoneStateListener.LISTEN_CALL_STATE)
+        telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        telephonyManager!!.listen(callStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
         val intentFilter = IntentFilter(Intent.ACTION_NEW_OUTGOING_CALL)
-        ctx.registerReceiver(outgoingReceiver, intentFilter)
+        context.registerReceiver(outgoingReceiver, intentFilter)
     }
 
     /**
      * Stop calls detection.
      */
     fun stop() {
-        tm!!.listen(callStateListener, PhoneStateListener.LISTEN_NONE)
-        ctx.unregisterReceiver(outgoingReceiver)
+        telephonyManager!!.listen(callStateListener, PhoneStateListener.LISTEN_NONE)
+        context.unregisterReceiver(outgoingReceiver)
     }
 
 }
