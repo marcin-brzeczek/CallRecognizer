@@ -4,9 +4,11 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
+            android:name=".InitApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -21,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".main.IncomingCallReceiver" >
+        <receiver android:name="com.wepa.callrecognizer.call.IncomingCallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
@@ -31,7 +33,7 @@
         </receiver>
 
         <service
-                android:name=".main.CallDetectService"
+                android:name="com.wepa.callrecognizer.call.CallDetectService"
 
                 android:enabled="true"
 
