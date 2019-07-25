@@ -34,4 +34,7 @@ data class ContactModel(
     val mail: String,
     @JsonProperty("sE-mail DW")
     val mailDW: String
-)
+
+) {
+    override fun toString() = "$firstName $lastName \n $mail"
+}
