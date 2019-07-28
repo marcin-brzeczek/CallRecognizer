@@ -37,7 +37,10 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-jackson:$retrofit_version"
+    //For Coroutines
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofit2_kotlin_coroutines_adapter_version"
+    //For RxJava2
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2+'
 
     //Dagger
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -59,4 +62,13 @@ dependencies {
 
     // Joda Time
     implementation "net.danlew:android.joda:$joda_version"
+
+    //RxJava2
+    implementation 'io.reactivex.rxjava2:rxjava:2+'
+    implementation 'io.reactivex.rxjava2:rxandroid:2+'
+
+    //Paper parcel
+    implementation "nz.bradcampbell:paperparcel:$paperparcel_version"
+    implementation "nz.bradcampbell:paperparcel-kotlin:$paperparcel_version"
+    kapt "nz.bradcampbell:paperparcel-compiler:$paperparcel_version"
 }

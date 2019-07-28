@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager
 import com.wepa.callrecognizer.model.ContactModel
 import com.wepa.callrecognizer.utils.makeLongToast
 
+
 class CallHelper(private val context: Context, private val contacts: List<ContactModel>?) {
     private var telephonyManager: TelephonyManager? = null
     private val callStateListener: CallStateListener
@@ -31,6 +32,7 @@ class CallHelper(private val context: Context, private val contacts: List<Contac
             }
         }
     }
+
 
     inner class OutgoingReceiver : BroadcastReceiver() {
 

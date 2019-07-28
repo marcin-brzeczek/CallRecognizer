@@ -10,6 +10,8 @@ buildscript {
         jackson_version = '2.9.6'
         kotlinx_coroutines_version = '1.1.1'
         joda_version = '2.10.1.1'
+        rxbinding_version = '3.0.0-alpha2'
+        paperparcel_version = '2.0.6'
     }
 
     repositories {
