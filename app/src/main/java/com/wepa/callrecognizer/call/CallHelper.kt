@@ -10,7 +10,7 @@ import com.wepa.callrecognizer.model.ContactModel
 import com.wepa.callrecognizer.utils.makeLongToast
 
 
-class CallHelper(private val context: Context, private val contacts: List<ContactModel>?) {
+class CallHelper(private val context: Context, private val contacts: ArrayList<ContactModel>?) {
     private var telephonyManager: TelephonyManager? = null
     private val callStateListener: CallStateListener
     private var contact: ContactModel? = null
@@ -24,7 +24,11 @@ class CallHelper(private val context: Context, private val contacts: List<Contac
             when (state) {
                 TelephonyManager.CALL_STATE_RINGING -> {
 
-                    contact = contacts?.first { it.mobilePhone == incomingNumber || it.phone == incomingNumber }
+                    contact = contacts?.find {
+                        (it.mobilePhone == incomingNumber ||
+                                it.mobilePhone.drop(3)  == incomingNumber||
+                                it.phone == incomingNumber )
+                    }
                     contact?.let {
                         context.makeLongToast(it.toString())
                     }

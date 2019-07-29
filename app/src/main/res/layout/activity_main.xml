@@ -26,13 +26,4 @@
         android:layout_below="@+id/buttonDetectToggle"
         android:text="Exit" />
 
-    <EditText
-            android:id="@+id/editTextNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:hint="Wprowadz numer dzwoniacego"
-            android:layout_centerInParent="true"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
 </RelativeLayout>

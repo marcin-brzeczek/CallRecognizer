@@ -16,17 +16,15 @@ class CallDetectService : Service() {
 
     private var callHelper: CallHelper? = null
 
-    private var contacts: List<ContactModel>? = null
-
     override fun onCreate() {
         AndroidInjection.inject(this)
         super.onCreate()
     }
 
-    override fun onStart(intent: Intent?, startId: Int) {
-        super.onStart(intent, startId)
-        contacts = intent?.getParcelableArrayListExtra(MainActivity::class.java.simpleName)
-    }
+//    override fun onStart(intent: Intent?, startId: Int) {
+//        super.onStart(intent, startId)
+//        contacts = intent?.getParcelableArrayListExtra(MainActivity::class.java.simpleName)
+//    }
 
 //    private fun getContactsRequest() {
 //        GlobalScope.launch(Dispatchers.Main) {
@@ -48,6 +46,7 @@ class CallDetectService : Service() {
 //    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        val contacts = intent.getParcelableArrayListExtra<ContactModel>(MainActivity::class.java.simpleName)
         callHelper = CallHelper(this, contacts)
         val res = super.onStartCommand(intent, flags, startId)
         callHelper!!.start()

@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     }
 
     override fun displayResult(contacts: ArrayList<ContactModel>) {
-        baseContext.makeLongToast("First element od contacts: ${contacts[0]}")
+//        baseContext.makeLongToast("First element od contacts: ${contacts[0]}")
         serviceIntent.putParcelableArrayListExtra(MainActivity::class.java.simpleName, contacts)
     }
 
