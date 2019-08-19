@@ -9,7 +9,7 @@ data class ContactsRequest(
     @JsonProperty("status")
     val status: Status,
     @JsonProperty("dane")
-    val data: ArrayList<ContactModel>
+    val data: ArrayList<ShortContactModel>?
 )
 
 data class Status(

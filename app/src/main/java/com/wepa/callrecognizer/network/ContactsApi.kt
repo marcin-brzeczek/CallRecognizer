@@ -1,9 +1,9 @@
 package com.wepa.callrecognizer.network
 
 import com.wepa.callrecognizer.model.ContactsRequest
-import com.wepa.callrecognizer.model.ShortContactModel
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ContactsApi {
 
@@ -19,8 +19,6 @@ interface ContactsApi {
     @GET("kontakty/lista")
     fun getContacts(): Single<ContactsRequest>
 
-    @GET("kontakty?tel={phoneNumber}")
-    fun getContactByPhoneNumber(
-        @retrofit2.http.Path("phoneNumber") nummber:String
-    ): Single<ShortContactModel>
+    @GET("kontakty?tel/")
+    fun getContactByPhoneNumber(@Query("phoneNumber")  nummber:String): Single<ContactsRequest>
 }

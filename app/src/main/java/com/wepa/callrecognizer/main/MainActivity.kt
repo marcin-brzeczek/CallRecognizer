@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import com.wepa.callrecognizer.R
 import com.wepa.callrecognizer.call.CallDetectService
 import com.wepa.callrecognizer.network.ContactsApi
@@ -59,11 +58,6 @@ class MainActivity : AppCompatActivity(){
                 )
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_main, menu)
-        return true
     }
 
 
