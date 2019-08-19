@@ -19,6 +19,6 @@ interface ContactsApi {
     @GET("kontakty/lista")
     fun getContacts(): Single<ContactsRequest>
 
-    @GET("kontakty?tel/")
+    @GET("kontakty?tel=phoneNumber")
     fun getContactByPhoneNumber(@Query("phoneNumber")  nummber:String): Single<ContactsRequest>
 }
