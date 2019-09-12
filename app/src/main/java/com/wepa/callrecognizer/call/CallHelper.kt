@@ -1,6 +1,5 @@
 package com.wepa.callrecognizer.call
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -15,7 +14,7 @@ class CallHelper(private val context: Context, private val contacts: ArrayList<C
     private val callStateListener: CallStateListener
     private var contact: ContactModel? = null
 
-    private val outgoingReceiver: OutgoingReceiver
+//    private val outgoingReceiver: OutgoingReceiver
 
     private val outgoingCall = " Połączenie wychodzące: "
 
@@ -38,17 +37,17 @@ class CallHelper(private val context: Context, private val contacts: ArrayList<C
     }
 
 
-    inner class OutgoingReceiver : BroadcastReceiver() {
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
-            context.makeLongToast("$outgoingCall $number")
-        }
-    }
+//    inner class OutgoingReceiver : BroadcastReceiver() {
+//
+//        override fun onReceive(context: Context, intent: Intent) {
+//            val number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER)
+//            context.makeLongToast("$outgoingCall $number")
+//        }
+//    }
 
     init {
         callStateListener = CallStateListener()
-        outgoingReceiver = OutgoingReceiver()
+//        outgoingReceiver = OutgoingReceiver()
     }
 
     fun start() {
@@ -56,11 +55,11 @@ class CallHelper(private val context: Context, private val contacts: ArrayList<C
         telephonyManager?.listen(callStateListener, PhoneStateListener.LISTEN_CALL_STATE)
 
         val intentFilter = IntentFilter(Intent.ACTION_NEW_OUTGOING_CALL)
-        context.registerReceiver(outgoingReceiver, intentFilter)
+//        context.registerReceiver(outgoingReceiver, intentFilter)
     }
 
     fun stop() {
         telephonyManager?.listen(callStateListener, PhoneStateListener.LISTEN_NONE)
-        context.unregisterReceiver(outgoingReceiver)
+//        context.unregisterReceiver(outgoingReceiver)
     }
 }

@@ -1,16 +1,16 @@
 package com.wepa.callrecognizer.call
 
-import android.app.Application
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
-import com.wepa.callrecognizer.main.MainActivity
-import com.wepa.callrecognizer.model.ContactModel
+import com.wepa.callrecognizer.model.ContactsRequest
 import com.wepa.callrecognizer.network.ContactsApi
 import com.wepa.callrecognizer.utils.makeLongToast
 import dagger.android.AndroidInjection
+import timber.log.Timber
 import javax.inject.Inject
 
 class CallDetectService : Service(), CallContract.ViewInterface {
@@ -22,47 +22,35 @@ class CallDetectService : Service(), CallContract.ViewInterface {
 
     private lateinit var presenter: CallPresenter
 
+    private lateinit var stateListener: PhoneStateListener
+
+    private lateinit var telephonyManager: TelephonyManager
 
     override fun onCreate() {
         AndroidInjection.inject(this)
         super.onCreate()
-        setupPresenter()
+        initializeData()
     }
 
-    private fun setupPresenter() {
+    private fun initializeData() {
         presenter = CallPresenter(this, contactsApi)
+        telephonyManager = baseContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        stateListener = initStateListener()
+        /*todo for test*/
+        presenter.getContactbyPhoneNumber("+48511113959")
     }
 
     override fun onStart(intent: Intent?, startId: Int) {
         super.onStart(intent, startId)
-        presenter.getContacts()
     }
 
     override fun displayError(message: String) {
         baseContext.makeLongToast("Error: $message")
+        Timber.d("Error message: $message")
     }
 
-    override fun displayContacts(contacts: ArrayList<ContactModel>) {
-//        baseContext.makeLongToast("First element od contacts: ${contacts[0]}")
-        serviceIntent.putParcelableArrayListExtra(MainActivity::class.java.simpleName, contacts)
-    }
-
-    private class CallStateListener(private val context: Application) : PhoneStateListener() {
-        override fun onCallStateChanged(state: Int, incomingNumber: String) {
-            when (state) {
-                TelephonyManager.CALL_STATE_RINGING -> {
-
-                    contact = contacts?.find {
-                        (it.mobilePhone == incomingNumber ||
-                                it.mobilePhone.drop(3) == incomingNumber ||
-                                it.phone == incomingNumber)
-                    }
-                    contact?.let {
-                        context.makeLongToast(it.toString())
-                    }
-                }
-            }
-        }
+    override fun displayContact(contact: ContactsRequest) {
+        makeLongToast("${contact.status}")
     }
 
 //    override fun onStart(intent: Intent?, startId: Int) {
@@ -70,7 +58,7 @@ class CallDetectService : Service(), CallContract.ViewInterface {
 //        contacts = intent?.getParcelableArrayListExtra(MainActivity::class.java.simpleName)
 //    }
 
-//    private fun getContactsRequest() {
+    //    private fun getContactsRequest() {
 //        GlobalScope.launch(Dispatchers.Main) {
 //            val getContactsRequest = withContext(Dispatchers.IO) { contactsApi.getContacts() }
 //            try {
@@ -88,18 +76,35 @@ class CallDetectService : Service(), CallContract.ViewInterface {
 //            }
 //        }
 //    }
+    private fun initStateListener() = object : PhoneStateListener() {
+
+        override fun onCallStateChanged(state: Int, incomingNumber: String) {
+
+//            if (state == TelephonyManager.CALL_STATE_RINGING)
+//                presenter.getContactbyPhoneNumber(incomingNumber)
+
+//                    contact = contacts?.find {
+//                        (it.mobilePhone == incomingNumber ||
+//                                it.mobilePhone.drop(3) == incomingNumber ||
+//                                it.phone == incomingNumber)
+//                    }
+//                    contact?.let {
+//                        context.makeLongToast(it.toString())
+//                    }
+
+        }
+    }
+
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val contacts = intent.getParcelableArrayListExtra<ContactModel>(MainActivity::class.java.simpleName)
-        callHelper = CallHelper(this, contacts)
+        telephonyManager.listen(stateListener, PhoneStateListener.LISTEN_CALL_STATE)
         val res = super.onStartCommand(intent, flags, startId)
-        callHelper!!.start()
         return res
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        callHelper?.stop()
+        telephonyManager.listen(stateListener, PhoneStateListener.LISTEN_NONE)
         presenter.stop()
     }
 

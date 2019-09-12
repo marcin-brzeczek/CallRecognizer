@@ -1,7 +1,4 @@
 <resources>
-    <string name="app_name">CallRecognizer</string>
-    <string name="settings">Ustawienia</string>
-    <string name="connection_error">Connection Error</string>
-    <string name="problem_occurred">Problem Occured</string>
-    <string name="invalid_credentials">Invalid Credentials</string>
+    <string name="app_name">Foreground Services Example</string>
+    <string name="text_value_radio_notification" translatable="false">Radio</string>
 </resources>
