@@ -18,6 +18,7 @@ import com.wepa.callrecognizer.network.ContactsApi
 import com.wepa.callrecognizer.notifications.CallNotificationManager
 import com.wepa.callrecognizer.utils.Statics
 import com.wepa.callrecognizer.utils.makeLongToast
+import com.wepa.callrecognizer.utils.showCustomToast
 import dagger.android.AndroidInjection
 import timber.log.Timber
 import javax.inject.Inject
@@ -90,7 +91,9 @@ class CallDetectService : Service(), CallContract.ViewInterface {
     }
 
     override fun displayContact(contact: ContactsRequest) {
-        makeLongToast("${contact.data?.first()}")
+//        makeLongToast("${contact.data?.first()}")
+
+        showCustomToast("${contact.data?.first()}")
     }
 
     private fun initStateListener() = object : PhoneStateListener() {
