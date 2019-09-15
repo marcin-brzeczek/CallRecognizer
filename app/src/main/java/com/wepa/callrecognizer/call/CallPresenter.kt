@@ -12,20 +12,8 @@ class CallPresenter(private val viewInterface: CallContract.ViewInterface, priva
 
     private val compositeDisposable = CompositeDisposable()
 
-//    private val contactsObserver
-//        get() = object : DisposableObserver<ContactsRequest>() {
-//
-//            override fun onComplete() {}
-//
-//            override fun onNext(contactsRequest: ContactsRequest) {
-//                viewInterface.displayContacts(contactsRequest.data)
-//            }
-//            override fun onError(error: Throwable) = viewInterface.displayError(error.message ?: "")
-//        }
-
     private val contactObserver
         get() = object : DisposableObserver<ContactsRequest>() {
-
             override fun onComplete() {}
 
             override fun onNext(contactRequest: ContactsRequest) {
@@ -33,16 +21,6 @@ class CallPresenter(private val viewInterface: CallContract.ViewInterface, priva
             }
             override fun onError(error: Throwable) = viewInterface.displayError(error.message ?: "")
         }
-
-
-//    override fun getContacts() {
-//        val getContactsObservable = contactsApi.getContacts().toObservable()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeWith(contactsObserver)
-//
-//        compositeDisposable.add(getContactsObservable)
-//    }
 
     override fun getContactbyPhoneNumber(phoneNumber:String) {
         val getContactsObservable = contactsApi.getContactByPhoneNumber(phoneNumber).toObservable()

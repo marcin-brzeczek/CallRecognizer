@@ -10,7 +10,7 @@ import com.wepa.callrecognizer.call.CallDetectService
 import com.wepa.callrecognizer.main.MainActivity
 import com.wepa.callrecognizer.utils.Statics
 
-private val FOREGROUND_CHANNEL_ID = "foreground_channel_id"
+const val FOREGROUND_CHANNEL_ID = "foreground_channel_id"
 private val TAG = CallDetectService::class.java.getSimpleName()
 private var mStateService = Statics.STATE_SERVICE.NOT_INIT
 
