@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">Foreground Services Example</string>
-    <string name="text_value_radio_notification" translatable="false">Radio</string>
+    <string name="app_name">Call recognizer</string>
 </resources>
