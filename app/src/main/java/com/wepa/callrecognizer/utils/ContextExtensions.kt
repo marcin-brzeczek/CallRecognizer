@@ -15,7 +15,7 @@ fun Context.makeLongToast(@StringRes textResource: Int) = Toast.makeText(this, r
 
 fun Context.showCustomToast(text: String) {
     val inflater = LayoutInflater.from(this)
-    val layout = inflater.inflate(R.layout.custom_toast,null)
+    val layout = inflater.inflate(R.layout.toast,null)
     val textView: TextView = layout.findViewById(R.id.text)
     textView.text = text
     with(Toast(applicationContext)) {
@@ -44,4 +44,3 @@ fun Context.showToast(toastMessage: String, duration: Long) {
     mToastToShow.show()
     toastCountDown.start()
 }
-

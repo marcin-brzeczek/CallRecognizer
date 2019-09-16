@@ -1,21 +1,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/custom_toast_container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/darkGray"
-        android:orientation="horizontal"
-        android:padding="8dp">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/custom_toast_container"
+                                             android:layout_width="fill_parent"
+                                             android:layout_height="fill_parent"
+                                             android:background="@color/darkGray"
+                                             android:orientation="horizontal"
+                                             android:padding="8dp">
 
     <ImageView
             android:id="@+id/logo"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/ic_call_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
             android:id="@+id/label"
@@ -28,7 +28,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo" />
+            app:layout_constraintTop_toBottomOf="@id/logo"/>
 
     <TextView
             android:id="@+id/text"
@@ -42,5 +42,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label"
-            tools:text="Firma Wepa Sp. z o.o." />
+            tools:text="Firma Wepa Sp. z o.o."/>
 </android.support.constraint.ConstraintLayout>

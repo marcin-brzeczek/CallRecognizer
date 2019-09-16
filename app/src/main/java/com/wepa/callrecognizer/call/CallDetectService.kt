@@ -216,7 +216,7 @@ class CallDetectService : Service(), CallContract.ViewInterface {
         val lPendingStopIntent =
             PendingIntent.getService(context, 0, lStopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val lRemoteViews = RemoteViews(context.getPackageName(), R.layout.radio_notification)
+        val lRemoteViews = RemoteViews(context.getPackageName(), R.layout.notification)
         lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_close_button, lPendingStopIntent)
 
         when (state) {

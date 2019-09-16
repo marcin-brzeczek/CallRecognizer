@@ -6,9 +6,9 @@ import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private val username ="7372115358"
+private const val username = "7372115358"
 
-private val password ="232671423"
+private const val password = "232671423"
 
 @Singleton
 class HeaderProvider @Inject constructor() : Interceptor {

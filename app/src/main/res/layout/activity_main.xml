@@ -6,10 +6,11 @@
             android:id="@+id/startBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Foreground Service"
+            android:text="Rozpocznij nasłuchiwanie połączeń"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/colorPrimary"
             android:textAllCaps="false"
+            android:fontFamily="@font/hanken_grotesk_semibold"
             android:textColor="#fff"
             android:textSize="8pt"
             android:padding="20dp"/>
