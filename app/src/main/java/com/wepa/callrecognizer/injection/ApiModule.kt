@@ -21,7 +21,6 @@ class ApiModule(val application: InitApp, val baseUrl: String) {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
         .addConverterFactory(JacksonConverterFactory.create(ObjectMapper().registerModule(KotlinModule())))
-//        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(baseUrl)
         .client(okHttpClient)

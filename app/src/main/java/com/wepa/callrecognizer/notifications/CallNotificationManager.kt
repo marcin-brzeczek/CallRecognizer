@@ -3,7 +3,6 @@ package com.wepa.callrecognizer.notifications
 import android.app.*
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
-import android.view.View
 import android.widget.RemoteViews
 import com.wepa.callrecognizer.R
 import com.wepa.callrecognizer.call.CallDetectService
@@ -20,10 +19,8 @@ class CallNotificationManager {
         context: Application,
         mNotificationManager: NotificationManager
     ): Notification {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && mNotificationManager.getNotificationChannel(
-                FOREGROUND_CHANNEL_ID
-            ) == null
-        ) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+            && mNotificationManager.getNotificationChannel(FOREGROUND_CHANNEL_ID) == null) {
             // The user-visible name of the channel.
             val name = "Call Recogniser"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -58,48 +55,25 @@ class CallNotificationManager {
 
         val lStopIntent = Intent(context, CallDetectService::class.java)
         lStopIntent.setAction(Statics.ACTION.STOP_ACTION)
-        val lPendingStopIntent =
-            PendingIntent.getService(context, 0, lStopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val lPendingStopIntent = PendingIntent.getService(context, 0, lStopIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val lRemoteViews = RemoteViews(context.getPackageName(), R.layout.notification)
         lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_close_button, lPendingStopIntent)
 
         when (mStateService) {
-
             Statics.STATE_SERVICE.PAUSE -> {
-                lRemoteViews.setViewVisibility(R.id.ui_notification_progress_bar, View.INVISIBLE)
-                lRemoteViews.setOnClickPendingIntent(
-                    R.id.ui_notification_player_button,
-                    lPendingPlayIntent
-                )
-                lRemoteViews.setImageViewResource(
-                    R.id.ui_notification_player_button,
-                    R.drawable.ic_play_arrow_white
-                )
+                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPlayIntent)
+                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_play_arrow_white)
             }
 
             Statics.STATE_SERVICE.PLAY -> {
-                lRemoteViews.setViewVisibility(R.id.ui_notification_progress_bar, View.INVISIBLE)
-                lRemoteViews.setOnClickPendingIntent(
-                    R.id.ui_notification_player_button,
-                    lPendingPauseIntent
-                )
-                lRemoteViews.setImageViewResource(
-                    R.id.ui_notification_player_button,
-                    R.drawable.ic_pause_white
-                )
+                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
+                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
             }
 
             Statics.STATE_SERVICE.PREPARE -> {
-                lRemoteViews.setViewVisibility(R.id.ui_notification_progress_bar, View.VISIBLE)
-                lRemoteViews.setOnClickPendingIntent(
-                    R.id.ui_notification_player_button,
-                    lPendingPauseIntent
-                )
-                lRemoteViews.setImageViewResource(
-                    R.id.ui_notification_player_button,
-                    R.drawable.ic_pause_white
-                )
+                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
+                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
             }
         }
 
@@ -121,6 +95,5 @@ class CallNotificationManager {
             lNotificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC)
         }
         return lNotificationBuilder.build()
-
     }
 }

@@ -11,25 +11,15 @@ import android.view.View
 import android.widget.Toast
 import com.wepa.callrecognizer.R
 import com.wepa.callrecognizer.call.CallDetectService
-import com.wepa.callrecognizer.network.ContactsApi
 import com.wepa.callrecognizer.network.NetworkHelper
 import com.wepa.callrecognizer.utils.Statics
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 private const val MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1
 private const val MY_PERMISSIONS_REQUEST_PROCESS_OUTGOING_CALLS = 2
 
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var contactsApi: ContactsApi
-
-
-    val serviceIntent by lazy { Intent(this@MainActivity, CallDetectService::class.java) }
-
-    private var detectEnabled: Boolean = false
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
