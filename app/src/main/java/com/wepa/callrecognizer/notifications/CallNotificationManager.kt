@@ -60,22 +60,22 @@ class CallNotificationManager {
         val lRemoteViews = RemoteViews(context.getPackageName(), R.layout.notification)
         lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_close_button, lPendingStopIntent)
 
-        when (mStateService) {
-            Statics.STATE_SERVICE.PAUSE -> {
-                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPlayIntent)
-                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_play_arrow_white)
-            }
-
-            Statics.STATE_SERVICE.PLAY -> {
-                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
-                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
-            }
-
-            Statics.STATE_SERVICE.PREPARE -> {
-                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
-                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
-            }
-        }
+//        when (mStateService) {
+//            Statics.STATE_SERVICE.PAUSE -> {
+//                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPlayIntent)
+//                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_play_arrow_white)
+//            }
+//
+//            Statics.STATE_SERVICE.PLAY -> {
+//                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
+//                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
+//            }
+//
+//            Statics.STATE_SERVICE.PREPARE -> {
+//                lRemoteViews.setOnClickPendingIntent(R.id.ui_notification_player_button, lPendingPauseIntent)
+//                lRemoteViews.setImageViewResource(R.id.ui_notification_player_button, R.drawable.ic_pause_white)
+//            }
+//        }
 
         val lNotificationBuilder: NotificationCompat.Builder
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -85,7 +85,7 @@ class CallNotificationManager {
         }
         lNotificationBuilder
             .setContent(lRemoteViews)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_call_callback)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .setOnlyAlertOnce(true)
             .setOngoing(true)
