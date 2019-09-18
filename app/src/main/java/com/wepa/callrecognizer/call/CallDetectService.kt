@@ -62,7 +62,8 @@ class CallDetectService : Service(), CallContract.ViewInterface {
         state = Statics.STATE_SERVICE.NOT_INIT
         callNotificationManager = CallNotificationManager()
         mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        telephonyManager = baseContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        telephonyManager =
+            baseContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         stateListener = initStateListener()
         state = Statics.STATE_SERVICE.NOT_INIT
     }
@@ -72,20 +73,20 @@ class CallDetectService : Service(), CallContract.ViewInterface {
         Timber.d("Error message: $message")
     }
 
-    override fun displayContact(contact: ContactsRequest) {
-        showCustomToast("${contact.data?.first()}")
+    override fun displayContact(contact: ContactsRequest?) {
+        contact?.data?.first()?.let { showCustomToast(it.toString()) }
     }
 
     private fun initStateListener() = object : PhoneStateListener() {
         override fun onCallStateChanged(state: Int, incomingNumber: String) {
-            if (state == TelephonyManager.CALL_STATE_RINGING)
-                presenter.getContactbyPhoneNumber(incomingNumber)
-        }
+            if (state == TelephonyManager.CALL_STATE_RINGING) {
+                var correctNumber = incomingNumber
+                if (!correctNumber.startsWith("+"))
+                    correctNumber = "+48".plus(correctNumber)
 
-//    contact = contacts?.find {
-//        (it.mobilePhone == incomingNumber ||
-//                it.mobilePhone.drop(3) == incomingNumber ||
-//                it.phone == incomingNumber)
+                presenter.getContactbyPhoneNumber(correctNumber)
+            }
+        }
     }
 
 
@@ -104,7 +105,10 @@ class CallDetectService : Service(), CallContract.ViewInterface {
                 state = Statics.STATE_SERVICE.PREPARE
                 startForeground(
                     Statics.NOTIFICATION_ID_FOREGROUND_SERVICE,
-                    callNotificationManager?.prepareNotification(this.application, mNotificationManager!!)
+                    callNotificationManager?.prepareNotification(
+                        this.application,
+                        mNotificationManager!!
+                    )
                 )
             }
 
@@ -112,7 +116,10 @@ class CallDetectService : Service(), CallContract.ViewInterface {
                 state = Statics.STATE_SERVICE.PAUSE
                 mNotificationManager!!.notify(
                     Statics.NOTIFICATION_ID_FOREGROUND_SERVICE,
-                    callNotificationManager?.prepareNotification(this.application, mNotificationManager!!)
+                    callNotificationManager?.prepareNotification(
+                        this.application,
+                        mNotificationManager!!
+                    )
                 )
                 mHandler.postDelayed(mDelayedShutdown, Statics.DELAY_SHUTDOWN_FOREGROUND_SERVICE)
             }
@@ -121,7 +128,10 @@ class CallDetectService : Service(), CallContract.ViewInterface {
                 state = Statics.STATE_SERVICE.PREPARE
                 mNotificationManager!!.notify(
                     Statics.NOTIFICATION_ID_FOREGROUND_SERVICE,
-                    callNotificationManager?.prepareNotification(this.application, mNotificationManager!!)
+                    callNotificationManager?.prepareNotification(
+                        this.application,
+                        mNotificationManager!!
+                    )
                 )
             }
 

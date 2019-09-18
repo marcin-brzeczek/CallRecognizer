@@ -22,6 +22,8 @@ import java.lang.reflect.Method
 
 private const val MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1
 private const val MY_PERMISSIONS_REQUEST_PROCESS_OUTGOING_CALLS = 2
+private const val MY_PERMISSIONS_REQUEST_READ_CALL_LOG = 3
+private const val MY_PERMISSIONS_REQUEST_WRITE_CALL_LOG = 4
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,18 +108,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPermissions() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            if (applicationContext.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            if (applicationContext.checkSelfPermission(Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.READ_PHONE_STATE),
-                    MY_PERMISSIONS_REQUEST_READ_PHONE_STATE
-                )
-            }
-            if (applicationContext.checkSelfPermission(Manifest.permission.PROCESS_OUTGOING_CALLS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.PROCESS_OUTGOING_CALLS),
-                    MY_PERMISSIONS_REQUEST_PROCESS_OUTGOING_CALLS
+                    arrayOf(Manifest.permission.READ_CALL_LOG),
+                    MY_PERMISSIONS_REQUEST_READ_CALL_LOG
                 )
             }
         }

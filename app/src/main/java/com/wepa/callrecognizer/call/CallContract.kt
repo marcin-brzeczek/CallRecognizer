@@ -10,7 +10,7 @@ class CallContract {
     }
 
     interface ViewInterface {
-        fun displayContact(contact: ContactsRequest)
+        fun displayContact(contact: ContactsRequest?)
         fun displayError(message: String)
     }
 }
